@@ -79,14 +79,58 @@ xelatex main
 
 ## 使用步骤
 
-1. 打开 `main.tex`，在 `\bjutset{ ... }` 中填入题目、作者、导师、学号、日期等信息。
-2. 在 `cabstract.tex` / `eabstract.tex` 中撰写中英文摘要与关键词。
-3. 在 `chapt1.tex` ~ `chapt6.tex` 中撰写正文各章节。如需增减章节，
-   请同步修改 `main.tex` 中的 `\include{...}` 列表。
-4. 在 `references.tex` 中添加参考文献条目。
-5. 在 `appendices.tex` / `publication.tex` / `acknowledgement.tex` 中
-   填写附录、发表论文与致谢。
-6. 使用 XeLaTeX 编译。
+### 第一步：填写论文信息
+
+打开 `main.tex`，找到 `\bjutset{ ... }` 块，填写以下字段：
+
+```latex
+\bjutset{
+  ctitle         = {论文中文题目},      % ← 改这里
+  cauthor        = {作者姓名},          % ← 改这里
+  cdiscipline    = {学科名称},          % ← 改这里
+  csupervisor    = {导师姓名},          % ← 改这里
+  cdate          = {2025年6月},         % ← 改这里
+  studentid      = {学号},              % ← 改这里
+  etitle         = {English Title},    % ← 改这里
+  cdegree        = {理学硕士},          % ← 按实际选：
+                                     %   理学硕士 / 工学硕士 / 管理学硕士
+                                     %   理学博士 / 工学博士 / 管理学博士
+  ccollege       = {所在学院},          % ← 改这里
+  ...
+}
+```
+
+### 第二步：撰写摘要
+
+- `cabstract.tex`：中文摘要正文 + `\ckeywords{关键词一；关键词二；…}`
+- `eabstract.tex`：英文摘要正文 + `\ekeywords{keyword one, keyword two, …}`
+
+### 第三步：撰写正文
+
+在 `chapt1.tex` ～ `chapt6.tex` 中按章填写内容。`chapt2.tex` 中保留了常用 LaTeX 元素的示例（公式、表格、图片、定理等），可供参考后删除。
+
+如需**增减章节数**，同步修改 `main.tex` 中的 `\include{...}` 列表：
+
+```latex
+\include{chapt1}
+\include{chapt2}
+% 删除不需要的，或添加 \include{chapt7} 等
+```
+
+### 第四步：填写参考文献
+
+在 `references.tex` 的 `thebibliography` 环境中添加条目，或改用 BibTeX（见编译方法）。
+
+### 第五步：填写其余部分
+
+| 文件 | 内容 |
+|---|---|
+| `appendices.tex` | 附录 |
+| `publication.tex` | 攻读学位期间发表论文 |
+| `acknowledgement.tex` | 致谢 |
+| `notation.tex` | 符号表（可选，不需要则删除 `main.tex` 中对应的 `\include`） |
+
+### 第六步：编译
 
 ## 致谢 / Attribution
 
