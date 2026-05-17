@@ -122,8 +122,8 @@ xelatex main
   % 时间与封面行政信息
   cdate          = {2025年6月},         % ← 改这里
   secretlevel    = {公开},              % 密级：公开 / 限制 / 秘密
-  clc            = {O413},             % 中图分类号，在国家图书馆官网查询
-  udc            = {530.145},          % UDC 分类号，不确定可留空 {}
+  clc            = {O413},             % 中图分类号，把摘要丢给 AI 问一下即可
+  udc            = {530},          % UDC 分类号，同上，丢给 AI 即可
 }
 ```
 
@@ -200,8 +200,12 @@ xelatex main
 
 ## 致谢 / Attribution
 
-本模板在 [bjut-swift/BJUTLATEX](https://github.com/bjut-swift/BJUTLATEX)（Apache-2.0）的基础上修改而来，
-增加了多章节结构、符号表、附录等框架，封面颜色自动匹配学位类型，以及更完整的编译说明。
+本模板在以下开源项目的基础上修改而来：
+
+- [bjut-swift/BJUTLATEX](https://github.com/bjut-swift/BJUTLATEX)（Apache-2.0）：原始排版结构与宏包配置
+- [fisherxt/bjutthesis](https://github.com/fisherxt/bjutthesis)（参考）：封面与扉页实现思路
+
+在此基础上增加了多章节结构、符号表、附录等框架，封面颜色按学位类型自动匹配，以及更完整的编译说明。
 
 ## 许可证 / License
 
