@@ -1,6 +1,6 @@
-# 北京工业大学碩士学位论文 LaTeX 模板
+# 北京工业大学学位论文 LaTeX 模板
 
-从一份完整的北工大学位论文中剥离具体内容后得到的纯模板，保留排版结构、字体、Logo、宏包配置及各章节框架。
+从北工大学位论文中剥离具体内容后得到的纯模板，支持学术学位硕士、专业学位硕士、学术学位博士、专业学位博士四种封面，保留排版结构、字体、Logo、宏包配置及各章节框架。
 
 ## 环境要求
 
@@ -48,11 +48,11 @@ bjut_thesis_template/
 ├── gbref.bst             # 国标参考文献样式
 ├── cabstract.tex         # 中文摘要
 ├── eabstract.tex         # 英文摘要
-├── chapt1.tex ~ chapt6.tex  # 正文各章节
+├── chapt1.tex ~ chapt5.tex  # 正文各章节（第5章为结论与展望）
+├── notation.tex          # 符号表（物理量名称及符号表，可选）
 ├── appendices.tex        # 附录
 ├── references.tex        # 参考文献（thebibliography 环境）
 ├── reference.bib         # 可选：BibTeX 数据库
-├── notation.tex          # 可选：符号表
 ├── publication.tex       # 攻读学位期间发表论文
 ├── acknowledgement.tex   # 致谢
 ├── SimSun.ttc / SimHei.ttf / FangSong.ttf / Kaiti.ttf   # 字体
@@ -77,6 +77,17 @@ xelatex main
 xelatex main
 ```
 
+如需生成**索引**（博士论文常用，硕士一般省略）：
+
+```bash
+xelatex main
+makeindex main
+xelatex main
+xelatex main
+```
+
+如不需要索引，在 `main.tex` 中注释掉 `\usepackage{makeidx}`、`\makeindex` 和 `\printindex` 三行即可。
+
 ## 使用步骤
 
 ### 第一步：填写论文信息
@@ -85,9 +96,12 @@ xelatex main
 
 ```latex
 \bjutset{
+  % 封面类型（决定封面底色，四选一）
+  covertype      = {academic-master},   % 见下方"封面颜色对照"
+
   % 论文题目
-  ctitle         = {论文中文题目},      % ← 改这里
-  etitle         = {English Title},    % ← 改这里
+  ctitle         = {论文中文题目},      % ← 改这里（≤ 25 字，不设副标题）
+  etitle         = {English Title},    % ← 改这里（字母全部大写）
 
   % 作者信息
   cauthor        = {作者姓名},          % ← 改这里
@@ -114,18 +128,23 @@ xelatex main
 ### 第二步：撰写摘要
 
 - `cabstract.tex`：中文摘要正文 + `\ckeywords{关键词一；关键词二；…}`
+  （硕士 500～1000 字，博士 1000～2000 字；关键词 3～5 个，由外延大到小排列）
 - `eabstract.tex`：英文摘要正文 + `\ekeywords{keyword one, keyword two, …}`
+  （约 300 个实词，内容与中文摘要对应）
 
 ### 第三步：撰写正文
 
-在 `chapt1.tex` ～ `chapt6.tex` 中按章填写内容。`chapt2.tex` 中保留了常用 LaTeX 元素的示例（公式、表格、图片、定理等），可供参考后删除。
+在 `chapt1.tex` ～ `chapt5.tex` 中按章填写内容。`chapt2.tex` 中保留了常用 LaTeX 元素的示例（公式、表格、图片、定理等），可供参考后删除。第5章（`chapt5.tex`）为结论与展望。
 
-如需**增减章节数**，同步修改 `main.tex` 中的 `\include{...}` 列表：
+如需**增减章节数**，在 `main.tex` 中同步修改 `\include{...}` 列表：
 
 ```latex
 \include{chapt1}
 \include{chapt2}
-% 删除不需要的，或添加 \include{chapt7} 等
+\include{chapt3}
+\include{chapt4}
+% 如需增加，在此添加 \include{chapt6} 等，并将结论移至最后
+\include{chapt5}   % 结论与展望（保持在最后）
 ```
 
 ### 第四步：填写参考文献
@@ -136,17 +155,49 @@ xelatex main
 
 | 文件 | 内容 |
 |---|---|
+| `notation.tex` | 符号表（可选，不需要则注释掉 `main.tex` 中的 `\include{notation}`） |
 | `appendices.tex` | 附录 |
 | `publication.tex` | 攻读学位期间发表论文 |
 | `acknowledgement.tex` | 致谢 |
-| `notation.tex` | 符号表（可选，不需要则删除 `main.tex` 中对应的 `\include`） |
 
 ### 第六步：编译
+
+## 封面颜色对照
+
+在 `main.tex` 的 `covertype` 字段选择对应值：
+
+| covertype | 适用人群 | 封面底色 |
+|---|---|---|
+| `academic-master` | 全日制学术学位硕士 / 同等学力硕士 | 蓝色 #177CB2 |
+| `professional-master` | 全日制/非全日制专业学位硕士 | 青绿色 #009C86 |
+| `academic-doctor` | 学术学位博士 | 深红色 #931E31 |
+| `professional-doctor` | 专业学位博士 | 橙色 #DE5F12 |
+
+## 北工大规范要点速查
+
+以下要点摘自[《北京工业大学研究生学位论文撰写规范》](https://graduate.bjut.edu.cn/beijinggongyedaxueyanjiushengxueweilunwenzhuanxieguifan.pdf)，填写时请注意：
+
+| 项目 | 硕士要求 | 博士要求 |
+|---|---|---|
+| **中文题目** | ≤ 25 字，不设副标题 | 同左 |
+| **英文题目** | 字母全部大写 | 同左 |
+| **中文摘要字数** | 500～1000 字 | 1000～2000 字 |
+| **英文摘要** | 实词约 300 个 | 同左 |
+| **关键词数量** | 3～5 个，由大到小排列 | 同左 |
+| **参考文献总数** | ≥ 40 篇 | ≥ 100 篇 |
+| **其中外文文献** | ≥ 20 篇 | ≥ 总数的 1/2 |
+| **近五年文献** | ≥ 总数的 1/3 | 同左 |
+
+其他注意事项：
+- 每章末尾须设「**本章小结**」小节（已在模板各章中预留）。
+- 摘要中不使用公式、图表，不标注文献编号。
+- 图表题注：图题置于图下方，表题置于表上方，采用三线表。
+- 公式按章编号，如（1-1）、（2-3）（模板已配置中文圆括号格式）。
 
 ## 致谢 / Attribution
 
 本模板在 [bjut-swift/BJUTLATEX](https://github.com/bjut-swift/BJUTLATEX)（Apache-2.0）的基础上修改而来，
-增加了多章节结构、符号表、附录等框架，以及更完整的编译说明。
+增加了多章节结构、符号表、附录等框架，封面颜色自动匹配学位类型，以及更完整的编译说明。
 
 ## 许可证 / License
 

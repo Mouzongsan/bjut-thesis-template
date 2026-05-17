@@ -97,7 +97,39 @@
 }
 
 % page styles
-\def\bjut@header@text{北京工业大学硕士学位论文}
+% 页眉文字、封面大标题：由 covertype 驱动，在 \AtBeginDocument 中统一设置
+% 用原生 TeX \ifx 比对，无需 xstring，避免宏包冲突
+\def\bjut@header@text{北京工业大学硕士学位论文}   % 默认值，运行时覆盖
+\def\bjut@cover@title{硕士学位论文}
+\def\bjut@cover@etitle{MASTERAL DISSERTATION}
+\def\ez@covertype{academic-master}                 % 默认：学术学位硕士
+\AtBeginDocument{%
+  \def\bjut@tmp@am{academic-master}%
+  \def\bjut@tmp@pm{professional-master}%
+  \def\bjut@tmp@ad{academic-doctor}%
+  \def\bjut@tmp@pd{professional-doctor}%
+  \ifx\ez@covertype\bjut@tmp@ad
+    \colorlet{bjut@color@coverbg}{bjut@color@academic@doctor}%
+    \def\bjut@header@text{北京工业大学博士学位论文}%
+    \def\bjut@cover@title{博士学位论文}%
+    \def\bjut@cover@etitle{DOCTORAL DISSERTATION}%
+  \else\ifx\ez@covertype\bjut@tmp@pd
+    \colorlet{bjut@color@coverbg}{bjut@color@professional@doctor}%
+    \def\bjut@header@text{北京工业大学博士学位论文}%
+    \def\bjut@cover@title{博士学位论文}%
+    \def\bjut@cover@etitle{DOCTORAL DISSERTATION}%
+  \else\ifx\ez@covertype\bjut@tmp@pm
+    \colorlet{bjut@color@coverbg}{bjut@color@professional@master}%
+    \def\bjut@header@text{北京工业大学硕士学位论文}%
+    \def\bjut@cover@title{硕士学位论文}%
+    \def\bjut@cover@etitle{MASTERAL DISSERTATION}%
+  \else
+    \colorlet{bjut@color@coverbg}{bjut@color@academic@master}%
+    \def\bjut@header@text{北京工业大学硕士学位论文}%
+    \def\bjut@cover@title{硕士学位论文}%
+    \def\bjut@cover@etitle{MASTERAL DISSERTATION}%
+  \fi\fi\fi
+}
 \def\bjut@header@font{\fontsize{9.5bp}{11.5bp}\selectfont\kaishu}
 \RequirePackage{fancyhdr}
 
@@ -239,11 +271,15 @@
 
 \RequirePackage{ezinfo}
 \RequirePackage{xcolor}
-% TODO check
 \definecolor{bjut@color@official}{RGB}{0,150,195}
 
-% TODO 专业学位
-\definecolor{bjut@color@coverbg}{RGB}{6,146,190}
+% ---- 四类封面底色（来源：北工大研究生院规范）----
+\definecolor{bjut@color@academic@master}     {RGB}{23,  124, 178}  % 学术学位硕士／同等学力硕士：蓝色
+\definecolor{bjut@color@professional@master} {RGB}{0,   156, 134}  % 全日制／非全日制专业学位硕士：青绿色
+\definecolor{bjut@color@academic@doctor}     {RGB}{147,  30,  49}  % 学术学位博士：深红色
+\definecolor{bjut@color@professional@doctor} {RGB}{222,  95,  18}  % 专业学位博士：橙色
+% 运行时由 \AtBeginDocument 根据 covertype 填充此颜色
+\colorlet{bjut@color@coverbg}{bjut@color@academic@master}  % 默认：学术学位硕士
 
 \RequirePackage{graphicx}
 \RequirePackage{tabularx}
@@ -269,10 +305,10 @@
       \includegraphics[width=10.8cm]{bjut_logo_white.pdf}
       \vskip 1.6cm
       \contour[20]{white}{
-        \makebox[12.6cm][s]{\fontsize{42}{0}\heiti\bfseries 硕士学位论文}
+        \makebox[12.6cm][s]{\fontsize{42}{0}\heiti\bfseries\bjut@cover@title}
       }
       \vskip 0.8cm
-      \makebox[10.8cm][s]{\fontsize{24}{30}\selectfont MASTERAL DISSERTATION}
+      \makebox[10.8cm][s]{\fontsize{24}{30}\selectfont\bjut@cover@etitle}
     \end{center}
     \vfill
     \begin{center}\zihao{3}\heiti
@@ -310,7 +346,10 @@
     \end{center}
     \vskip 2.2cm
     \begin{center}
-      \makebox[12cm][s]{\zihao{-1}\kaishu\bfseries{北京工业大学工学硕士学位论文}}
+      % 内封标题由学校名 + 学位（来自 cdegree 字段）+ 学位论文 自动拼合
+      % 例：cdegree=理学硕士 → 北京工业大学理学硕士学位论文
+      %     cdegree=工学博士 → 北京工业大学工学博士学位论文
+      \makebox[12cm][s]{\zihao{-1}\kaishu\bfseries{北京工业大学\ez@cdegree 学位论文}}
     \end{center}
     \vskip 0.98cm
     \begin{center}

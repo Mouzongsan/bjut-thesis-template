@@ -15,6 +15,10 @@
 \usepackage{empheq}
 \usepackage{microtype}
 \usepackage{longtable,array}
+% 索引支持（可选；博士论文常用，硕士一般不需要）
+% 如不需要索引，注释掉下面这行及文末的 \printindex
+\usepackage{makeidx}
+\makeindex
 
 \allowdisplaybreaks[2]
 
@@ -58,13 +62,20 @@
 %  论文信息（请填写）
 % =============================================================
 \bjutset{
+  % ── 封面类型（决定封面底色）─────────────────────
+  % 可选值（四选一，删除不需要的注释）：
+  %   academic-master      学术学位硕士 / 同等学力硕士（蓝色）
+  %   professional-master  全日制/非全日制专业学位硕士（青绿色）
+  %   academic-doctor      学术学位博士（深红色）
+  %   professional-doctor  专业学位博士（橙色）
+  covertype      = {academic-master },         % ← 按实际修改
   % ── 论文题目 ─────────────────────────────────────
-  ctitle         = {论文中文题目},            % 中文题目
-  etitle         = {English Title of the Thesis},  % 英文题目
+  ctitle         = {论文中文题目},            % 中文题目（≤ 25 字，不设副标题）
+  etitle         = {English Title of the Thesis},  % 英文题目（字母全部大写）
   % ── 作者信息 ─────────────────────────────────────
   cauthor        = {作者姓名},                % 姓名（中文）
   studentid      = {S202200001},             % 学号（按实际填写）
-  cdegree        = {理学硕士},               % 学位，按实际选填：
+  cdegree        = {理学碩士},              % 学位，按实际选填：
                                              %   理学硕士 / 工学硕士 / 管理学硕士
                                              %   理学博士 / 工学博士 / 管理学博士
   cdiscipline    = {学科名称},               % 一级学科，如：物理学 / 机械工程
@@ -80,7 +91,7 @@
   schoolcode     = {10005},                  % 学校代码（北工大固定为 10005，勿改）
   secretlevel    = {公开},                   % 密级：公开 / 限制 / 秘密 / 机密
   clc            = {O413},                   % 中图分类号（在国家图书馆官网查询）
-  udc            = {530.145},               % UDC 分类号（与中图对应，不确定可留空 {}）
+  udc            = {530},               % UDC 分类号（与中图对应，不确定可留空 {}）
 }
 
 \begin{document}
@@ -97,11 +108,13 @@
 \maketitle
 \makestate
 
-% ---- 前置部分：摘要、目录 ----
+% ---- 前置部分：摘要、目录、符号表 ----
 \frontmatter
 \include{cabstract}     % 中文摘要
 \include{eabstract}     % 英文摘要
 \makebitoc              % 中英文双语目录
+% 符号表（可选：不需要则注释掉下一行）
+\include{notation}      % 物理量名称及符号表
 
 % ---- 主体部分：正文章节 ----
 \mainmatter
@@ -117,8 +130,8 @@
 \include{chapt2}
 \include{chapt3}
 \include{chapt4}
-\include{chapt5}
-\include{chapt6}
+\include{chapt5}   % 结论与展望
+% 如需增加章节，复制 chapt3.tex 并在此处添加 \include{chapt6} 等
 
 % ---- 参考文献与附录 ----
 \include{references}
@@ -126,8 +139,15 @@
 \cleardoublepage
 \include{publication}   % 发表论文情况
 
-% ---- 后置部分：致谢 ----
+% ---- 后置部分：致谢、索引 ----
 \backmatter
 \include{acknowledgement}
+
+% 索引（可选；与 preamble 中的 \usepackage{makeidx} 配套）
+% 正文中用 \index{词条} 标记需要收录的词条。
+% 编译完成后需额外运行一次 makeindex：
+%   xelatex main → makeindex main → xelatex main → xelatex main
+% 如不需要索引，注释掉下面这行。
+\printindex
 
 \end{document}

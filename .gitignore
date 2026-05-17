@@ -23,9 +23,11 @@
 *.glg
 *.xdy
 
-# ===== 編譯產出的 PDF（保留 main.pdf 作為預覽） =====
-# 若不想保留 PDF，取消下行的 # 號
-# *.pdf
+# ===== 編譯產出的 PDF（保留 main.pdf 作為預覽）=====
+*.pdf
+!bjut_logo_color.pdf
+!bjut_logo_white.pdf
+!main.pdf
 
 # ===== macOS =====
 .DS_Store
