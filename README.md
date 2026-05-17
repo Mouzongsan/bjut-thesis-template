@@ -85,16 +85,20 @@ xelatex main
 
 ```latex
 \bjutset{
+  clc            = {O413},             % 中图分类号，在国家图书馆官网（opac.nlc.cn）查询
+  udc            = {530.145},          % UDC 分类号，与中图分类号对应，不确定可留空 {}
+  secretlevel    = {公开},              % 密级：公开 / 限制 / 秘密
   ctitle         = {论文中文题目},      % ← 改这里
   cauthor        = {作者姓名},          % ← 改这里
-  cdiscipline    = {学科名称},          % ← 改这里
+  cdiscipline    = {学科名称},          % 一级学科，如：物理学 / 机械工程
   csupervisor    = {导师姓名},          % ← 改这里
+  csupervstitle  = {教授},             % 导师职称，如：教授 / 副教授
   cdate          = {2025年6月},         % ← 改这里
-  studentid      = {学号},              % ← 改这里
+  studentid      = {S202200001},        % ← 改这里（按实际学号格式）
   etitle         = {English Title},    % ← 改这里
   cdegree        = {理学硕士},          % ← 按实际选：
-                                     %   理学硕士 / 工学硕士 / 管理学硕士
-                                     %   理学博士 / 工学博士 / 管理学博士
+                                       %   理学硕士 / 工学硕士 / 管理学硕士
+                                       %   理学博士 / 工学博士 / 管理学博士
   ccollege       = {所在学院},          % ← 改这里
   ...
 }
