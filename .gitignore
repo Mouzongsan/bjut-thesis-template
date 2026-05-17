@@ -1,0 +1,42 @@
+# ===== LaTeX 編譯產物 =====
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.nlo
+*.nls
+*.out
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.idx
+*.ilg
+*.ind
+*.glo
+*.gls
+*.acn
+*.acr
+*.alg
+*.glg
+*.xdy
+
+# ===== 編譯產出的 PDF（保留 main.pdf 作為預覽） =====
+# 若不想保留 PDF，取消下行的 # 號
+# *.pdf
+
+# ===== macOS =====
+.DS_Store
+.AppleDouble
+
+# ===== 暫存與 IDE =====
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# ===== 其他工作目錄產物 =====
+*.tmp

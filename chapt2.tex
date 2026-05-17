@@ -1,0 +1,173 @@
+% ============================================================
+%  第二章：LaTeX 常用元素示例
+%  本章展示公式、定理、表格、图片、交叉引用等常见用法。
+%  实际写作时请将本章内容替换为自己的章节。
+% ============================================================
+\chapter{第二章标题}
+
+% ────────────────────────────────────────────────────────────
+\section{数学公式}
+% ────────────────────────────────────────────────────────────
+
+\subsection{行内公式与单行公式}
+
+行内公式直接用美元符号包裹，例如 $f(x) = x^2 + 1$ 或
+薛定谔方程 $\hat{H}\psi = E\psi$。
+
+带编号的单行公式使用 \texttt{equation} 环境：
+\begin{equation}
+  \int_{-\infty}^{+\infty} e^{-x^2}\,\dd x = \sqrt{\pi}.
+  \label{eq:gaussian}
+\end{equation}
+
+引用时用 \cref{eq:gaussian}（或 \eqref{eq:gaussian}）。
+
+\subsection{多行对齐公式}
+
+使用 \texttt{align} 环境在等号处对齐：
+\begin{align}
+  (a+b)^2 &= a^2 + 2ab + b^2, \label{eq:binom2} \\
+  (a-b)^2 &= a^2 - 2ab + b^2. \label{eq:binom2m}
+\end{align}
+
+不需要编号的行在末尾加 \verb|\notag| 或改用 \texttt{align*}。
+
+\subsection{分段函数}
+
+\begin{equation}
+  |x| =
+  \begin{cases}
+    \phantom{-}x, & x \geq 0, \\
+    -x,           & x < 0.
+  \end{cases}
+\end{equation}
+
+\subsection{矩阵}
+
+\begin{equation}
+  A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix},
+  \qquad
+  \det(A) = a_{11}a_{22} - a_{12}a_{21}.
+\end{equation}
+
+% ────────────────────────────────────────────────────────────
+\section{定理、引理与证明}
+% ────────────────────────────────────────────────────────────
+
+% 定理环境在 main.tex 中已定义（theorem / lemma / proposition 等）
+
+\begin{theorem}[勾股定理]\label{thm:pythagoras}
+  设 $a$、$b$ 为直角三角形的两直角边，$c$ 为斜边，则
+  \[
+    a^2 + b^2 = c^2.
+  \]
+\end{theorem}
+
+\begin{proof}
+  （在此给出证明过程。）
+\end{proof}
+
+\begin{lemma}\label{lem:example}
+  （引理的内容。）
+\end{lemma}
+
+\begin{corollary}
+  由\cref{thm:pythagoras} 可知，……
+\end{corollary}
+
+% ────────────────────────────────────────────────────────────
+\section{表格}
+% ────────────────────────────────────────────────────────────
+
+使用 \texttt{booktabs} 宏包（已在 \texttt{main.tex} 中加载）绘制三线表，
+如\cref{tab:example}所示。
+
+\begin{table}[htbp]
+  \centering
+  \caption{示例表格：不同方法在基准上的对比}
+  \label{tab:example}
+  \begin{tabular}{l c c c}
+    \toprule
+    方法           & 指标 1 & 指标 2 & 指标 3 \\
+    \midrule
+    方法 A         & 0.832  & 1.24   & 97.3\% \\
+    方法 B         & 0.751  & 1.56   & 95.1\% \\
+    \textbf{本文方法} & \textbf{0.891} & \textbf{1.10} & \textbf{98.6\%} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% 若表格较宽，可改用 longtable 或旋转（rotating 宏包的 sidewaystable）。
+
+% ────────────────────────────────────────────────────────────
+\section{插图}
+% ────────────────────────────────────────────────────────────
+
+图片建议以 PDF 或 PNG 格式存放在 \texttt{figs/} 子目录中。
+\Cref{fig:example} 展示了插图的基本用法。
+
+\begin{figure}[htbp]
+  \centering
+  % 取消注释并替换文件名：
+  % \includegraphics[width=0.6\textwidth]{figs/your_figure.pdf}
+  \framebox[0.6\textwidth]{\rule{0pt}{4cm}\centering 图片占位}
+  \caption{图片标题：说明图片内容。}
+  \label{fig:example}
+\end{figure}
+
+\subsection{并排两图}
+
+\begin{figure}[htbp]
+  \centering
+  % 左图
+  \begin{minipage}[b]{0.45\textwidth}
+    \centering
+    % \includegraphics[width=\textwidth]{figs/fig_a.pdf}
+    \framebox[\textwidth]{\rule{0pt}{3cm}\centering 左图}
+    \caption{左图标题。}
+    \label{fig:left}
+  \end{minipage}
+  \hfill
+  % 右图
+  \begin{minipage}[b]{0.45\textwidth}
+    \centering
+    % \includegraphics[width=\textwidth]{figs/fig_b.pdf}
+    \framebox[\textwidth]{\rule{0pt}{3cm}\centering 右图}
+    \caption{右图标题。}
+    \label{fig:right}
+  \end{minipage}
+\end{figure}
+
+% ────────────────────────────────────────────────────────────
+\section{列表}
+% ────────────────────────────────────────────────────────────
+
+无序列表：
+\begin{itemize}
+  \item 第一条。
+  \item 第二条。
+  \item 第三条。
+\end{itemize}
+
+有序列表：
+\begin{enumerate}
+  \item 步骤一：……
+  \item 步骤二：……
+  \item 步骤三：……
+\end{enumerate}
+
+% ────────────────────────────────────────────────────────────
+\section{文献引用与交叉引用}
+% ────────────────────────────────────────────────────────────
+
+引用文献用 \verb|\cite{key}|，例如见文献~\cite{doe2020}。
+多篇同时引用：\cite{doe2020,smith2021}。
+
+引用本文中的公式、定理、图、表分别用 \verb|\cref{}|：
+\cref{eq:gaussian}、\cref{thm:pythagoras}、\cref{fig:example}、\cref{tab:example}。
+
+% ────────────────────────────────────────────────────────────
+\section{本章小结}
+% ────────────────────────────────────────────────────────────
+
+本章介绍了……（总结本章主要内容）。
