@@ -97,9 +97,10 @@
 }
 
 % page styles
-% 页眉文字、封面大标题：由 covertype 驱动，在 \AtBeginDocument 中统一设置
+% 封面大标题、页眉：由 covertype / cdegree 驱动，在 \AtBeginDocument 中统一设置
 % 用原生 TeX \ifx 比对，无需 xstring，避免宏包冲突
-\def\bjut@header@text{北京工业大学硕士学位论文}   % 默认值，运行时覆盖
+% 页眉格式：「北京工业大学<cdegree>学位论文」，如「北京工业大学工学博士学位论文」
+\def\bjut@header@text{北京工业大学\ez@cdegree 学位论文}  % 由 cdegree 字段自动生成
 \def\bjut@cover@title{硕士学位论文}
 \def\bjut@cover@etitle{MASTERAL DISSERTATION}
 \def\ez@covertype{academic-master}                 % 默认：学术学位硕士
@@ -108,24 +109,22 @@
   \def\bjut@tmp@pm{professional-master}%
   \def\bjut@tmp@ad{academic-doctor}%
   \def\bjut@tmp@pd{professional-doctor}%
+  % 页眉直接取 cdegree，如「北京工业大学工学博士学位论文」
+  \def\bjut@header@text{北京工业大学\ez@cdegree 学位论文}%
   \ifx\ez@covertype\bjut@tmp@ad
     \colorlet{bjut@color@coverbg}{bjut@color@academic@doctor}%
-    \def\bjut@header@text{北京工业大学博士学位论文}%
     \def\bjut@cover@title{博士学位论文}%
     \def\bjut@cover@etitle{DOCTORAL DISSERTATION}%
   \else\ifx\ez@covertype\bjut@tmp@pd
     \colorlet{bjut@color@coverbg}{bjut@color@professional@doctor}%
-    \def\bjut@header@text{北京工业大学博士学位论文}%
     \def\bjut@cover@title{博士学位论文}%
     \def\bjut@cover@etitle{DOCTORAL DISSERTATION}%
   \else\ifx\ez@covertype\bjut@tmp@pm
     \colorlet{bjut@color@coverbg}{bjut@color@professional@master}%
-    \def\bjut@header@text{北京工业大学硕士学位论文}%
     \def\bjut@cover@title{硕士学位论文}%
     \def\bjut@cover@etitle{MASTERAL DISSERTATION}%
   \else
     \colorlet{bjut@color@coverbg}{bjut@color@academic@master}%
-    \def\bjut@header@text{北京工业大学硕士学位论文}%
     \def\bjut@cover@title{硕士学位论文}%
     \def\bjut@cover@etitle{MASTERAL DISSERTATION}%
   \fi\fi\fi
